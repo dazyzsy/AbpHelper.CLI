@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AbpHelper.Core": {
+      "commandName": "Project"
+    },
+    "TryCommand": {
+      "commandName": "Project",
+      "commandLineArgs": "bgen crud"
+    }
+  }
+}

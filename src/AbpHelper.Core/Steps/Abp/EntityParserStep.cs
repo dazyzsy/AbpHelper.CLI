@@ -49,6 +49,12 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                 var classDeclarationSyntax = root.Descendants<ClassDeclarationSyntax>().Single();
                 var className = classDeclarationSyntax.Identifier.ToString();
                 var baseList = classDeclarationSyntax.BaseList!;
+
+                var t  = baseList.Descendants<SimpleBaseTypeSyntax>().ToList();
+
+                var b = t[0].ToFullString(); 
+                var a = baseList.Descendants<SimpleBaseTypeSyntax>().First(node => !node.ToFullString().StartsWith("I"))
+                    .Descendants<GenericNameSyntax>();
                 var genericNameSyntax = baseList.Descendants<SimpleBaseTypeSyntax>()
                     .First(node => !node.ToFullString().StartsWith("I")) // Not interface
                     .Descendants<GenericNameSyntax>()
@@ -63,6 +69,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                     baseType = baseList.Descendants<SimpleBaseTypeSyntax>().Single(node => !node.ToFullString().StartsWith("I")).Type.ToString();
                     primaryKey = null;
 
+                    var test = root.Descendants<MethodDeclarationSyntax>();
                     // Get composite keys
                     var getKeysMethod = root.Descendants<MethodDeclarationSyntax>().Single(m => m.Identifier.ToString() == "GetKeys");
                     keyNames = getKeysMethod

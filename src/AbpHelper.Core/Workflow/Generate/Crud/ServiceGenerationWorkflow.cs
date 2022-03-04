@@ -20,30 +20,31 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Generate.Crud
                             step.TargetDirectory = new JavaScriptExpression<string>(VariableNames.AspNetCoreDir);
                         }
                     ).WithName(name)
-                    /* Generate permissions */
-                    .IfElse(
-                        ifElse => ifElse.ConditionExpression = new JavaScriptExpression<bool>("Option.SkipPermissions"),
-                        ifElse =>
-                        {
-                            ifElse
-                                .When(OutcomeNames.True)
-                                .Then(ActivityNames.AutoMapper)
-                                ;
-                            ifElse
-                                .When(OutcomeNames.False)
-                                .Then<FileFinderStep>(
-                                    step => { step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}Permissions.cs`"); })
-                                .Then<PermissionsStep>()
-                                .Then<FileModifierStep>()
-                                .Then<FileFinderStep>(
-                                    step => { step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}PermissionDefinitionProvider.cs`"); })
-                                .Then<PermissionDefinitionProviderStep>()
-                                .Then<FileModifierStep>()
-                                .Then(ActivityNames.AutoMapper)
-                                ;
-                        }
-                    )
-                    /* Add mapping */
+                    /* Baan No Need Generate permissions 
+                       Maybe Generate In Total Project */
+                    //.IfElse(
+                    //    ifElse => ifElse.ConditionExpression = new JavaScriptExpression<bool>("Option.SkipPermissions"),
+                    //    ifElse =>
+                    //    {
+                    //        ifElse
+                    //            .When(OutcomeNames.True)
+                    //            .Then(ActivityNames.AutoMapper)
+                    //            ;
+                    //        ifElse
+                    //            .When(OutcomeNames.False)
+                    //            .Then<FileFinderStep>(
+                    //                step => { step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}Permissions.cs`"); })
+                    //            .Then<PermissionsStep>()
+                    //            .Then<FileModifierStep>()
+                    //            .Then<FileFinderStep>(
+                    //                step => { step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}PermissionDefinitionProvider.cs`"); })
+                    //            .Then<PermissionDefinitionProviderStep>()
+                    //            .Then<FileModifierStep>()
+                    //            .Then(ActivityNames.AutoMapper)
+                    //            ;
+                    //    }
+                    //)
+                    /* Add mapping */                                                
                     .Then<FileFinderStep>(step => step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}ApplicationAutoMapperProfile.cs`")).WithName(ActivityNames.AutoMapper)
                     .Then<ApplicationAutoMapperProfileStep>()
                     .Then<FileModifierStep>()

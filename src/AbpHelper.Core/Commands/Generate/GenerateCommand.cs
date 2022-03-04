@@ -1,4 +1,5 @@
 ﻿using System;
+using EasyAbp.AbpHelper.Core.Commands.Generate.Antd;
 using EasyAbp.AbpHelper.Core.Commands.Generate.Controller;
 using EasyAbp.AbpHelper.Core.Commands.Generate.Crud;
 using EasyAbp.AbpHelper.Core.Commands.Generate.Localization;
@@ -18,6 +19,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.Generate
             AddCommand<MethodsCommand>();
             AddCommand<LocalizationCommand>();
             AddCommand<ControllerCommand>();
+            AddCommand<TryCommand>();
         }
     }
 }

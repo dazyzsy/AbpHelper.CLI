@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AbpHelper": {
+      "commandName": "Project",
+      "commandLineArgs": "bgen crud Todo -d D:\\Codes\\BaanApiNext"
+    }
+  }
+}

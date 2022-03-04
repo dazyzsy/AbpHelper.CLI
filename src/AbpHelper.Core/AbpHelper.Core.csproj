@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props" />
+  <!--<Import Project="..\..\common.props" />-->
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,6 +10,14 @@
     <LangVersion>10.0</LangVersion>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <Nullable>enable</Nullable>
+    <Version>0.8.4.3</Version>
+    <Authors>syzhang</Authors>
+    <Company>b-ONE Tech</Company>
+    <Copyright>b-ONE Tech</Copyright>
+    <PackageProjectUrl>https://b1.co</PackageProjectUrl>
+    <AssemblyVersion>0.8.4.3</AssemblyVersion>
+    <FileVersion>0.8.4.3</FileVersion>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,8 +32,8 @@
     <PackageReference Include="Volo.Abp.Http" Version="$(AbpVersion)" />
     <PackageReference Include="Volo.Abp.VirtualFileSystem" Version="$(AbpVersion)" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="NuGet.Protocol" Version="5.7.0" />
   </ItemGroup>
 
@@ -33,6 +41,20 @@
     <Compile Remove="Templates\**\*.*" />
     <Content Remove="Templates\**\*.*" />
     <EmbeddedResource Include="Templates\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\Baan\Crud\ApplicationAutoMapperProfile_CreateMap" />
+    <None Remove="Templates\Baan\Crud\Entity_ProtectedConstructor" />
+    <None Remove="Templates\Baan\Crud\Entity_PublicConstructor" />
+    <None Remove="Templates\Baan\Crud\UsingEntityDtoNamespace" />
+    <None Remove="Templates\Baan\Crud\UsingEntityNamespace" />
+    <None Remove="Templates\Baan\Crud\WebAutoMapperProfile_CreateMap" />
+    <None Remove="Templates\Baan\Crud\WebAutoMapperProfile_Using" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Templates\Baan\Crud\Groups\" />
   </ItemGroup>
 
 </Project>

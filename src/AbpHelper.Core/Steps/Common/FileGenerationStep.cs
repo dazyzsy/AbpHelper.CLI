@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Elsa.Expressions;
@@ -28,7 +29,13 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
             var targetFile = await context.EvaluateAsync(TargetFile, cancellationToken);
 
             LogInput(() => targetFile);
+            LogInput(() => targetFile,$"Current Value: {targetFile}");
             LogInput(() => Contents, $"Contents length: {Contents.Length}");
+
+            if (targetFile.IsNullOrEmpty())
+            {
+                targetFile = @"D:\\Downloads\try2.txt";
+            }
 
             var dir = Path.GetDirectoryName(targetFile);
             if (!Directory.Exists(dir))

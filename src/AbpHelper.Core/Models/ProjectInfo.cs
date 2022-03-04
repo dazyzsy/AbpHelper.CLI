@@ -29,13 +29,15 @@ namespace EasyAbp.AbpHelper.Core.Models
     public enum TemplateType
     {
         Application,
-        Module
+        Module,
+        Test
     }
 
     public enum UiFramework
     {
         None,
         RazorPages,
-        Angular
+        Angular,
+        Antd
     }
 }

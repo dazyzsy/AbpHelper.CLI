@@ -29,16 +29,36 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
             }
             else
             {
-                throw new NotSupportedException($"Unknown ABP project structure. Directory: {baseDirectory}");
+                templateType = TemplateType.Test;
+                // throw new NotSupportedException($"Unknown ABP project structure. Directory: {baseDirectory}");
             }
 
+            //// Assume the domain project must be existed for an ABP project
+            //var domainCsprojFile = SearchFileInDirectory(baseDirectory, "*.Domain.csproj", excludeDirectories);
+            //if (domainCsprojFile == null) throw new NotSupportedException($"Cannot find the domain project file. Make sure it is a valid ABP project. Directory: {baseDirectory}");
 
-            // Assume the domain project must be existed for an ABP project
-            var domainCsprojFile = SearchFileInDirectory(baseDirectory, "*.Domain.csproj", excludeDirectories);
-            if (domainCsprojFile == null) throw new NotSupportedException($"Cannot find the domain project file. Make sure it is a valid ABP project. Directory: {baseDirectory}");
+            //var fileName = Path.GetFileName(domainCsprojFile);
+            //var fullName = fileName.RemovePostFix(".Domain.csproj");
 
-            var fileName = Path.GetFileName(domainCsprojFile);
-            var fullName = fileName.RemovePostFix(".Domain.csproj");
+            var fileName = "";
+            var fullName = "Test";
+            if (templateType != TemplateType.Test)
+            {
+                var domainCsprojFile = SearchFileInDirectory(baseDirectory, "*.Domain.csproj", excludeDirectories);
+                if (domainCsprojFile == null) throw new NotSupportedException($"Cannot find the domain project file. Make sure it is a valid ABP project. Directory: {baseDirectory}");
+
+                fileName = Path.GetFileName(domainCsprojFile);
+                fullName = fileName.RemovePostFix(".Domain.csproj");
+            }
+            else
+            {
+                var domainCsprojFile = SearchFileInDirectory(baseDirectory, "*.Core.csproj", excludeDirectories);
+                if (domainCsprojFile == null) throw new NotSupportedException($"Cannot find the domain project file. Make sure it is a valid ABP project. Directory: {baseDirectory}");
+
+                fileName = Path.GetFileName(domainCsprojFile);
+                fullName = fileName.RemovePostFix(".Core.csproj");
+            }
+
 
             UiFramework uiFramework;
             if (FileExistsInDirectory(baseDirectory, "*.cshtml", excludeDirectories))
@@ -55,6 +75,11 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
 
             }
 
+            if (templateType == TemplateType.Test)
+            {
+                uiFramework = UiFramework.Antd;
+            }
+
             string aspNetCoreDir = Path.Combine(baseDirectory, "aspnet-core");
             if (Directory.Exists(aspNetCoreDir))
             {
@@ -64,7 +89,11 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
             {
                 context.SetVariable(VariableNames.AspNetCoreDir, baseDirectory);
             }
-            EnsureSlnFileExists(context, fullName);
+
+            if (templateType != TemplateType.Test)
+            {
+                EnsureSlnFileExists(context, fullName);
+            }
 
             var tiered = false;
             if (templateType == TemplateType.Application)
