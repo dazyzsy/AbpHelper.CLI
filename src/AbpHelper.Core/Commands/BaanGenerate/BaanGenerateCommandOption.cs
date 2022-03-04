@@ -13,5 +13,8 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate
 
         [Option("no-overwrite", Description = "Specify not to overwrite existing files or content")]
         public bool NoOverwrite { get; set; }
+
+        [Option('n', "antdirectory", Description = "The ABP project root directory. If no directory is specified, current directory is used")]
+        public string AntdDirectory { get; set; } = null!;
     }
 }

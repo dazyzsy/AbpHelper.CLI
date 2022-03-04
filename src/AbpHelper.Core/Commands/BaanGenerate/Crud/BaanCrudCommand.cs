@@ -109,6 +109,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                                         .Then(TestGeneration);
 
                                     @switch.When(UiFramework.Antd.ToString("D"))
+                                        .AddUiRazorPagesGenerationWorkflow()
                                         .Then(TestGeneration);
 
                                     @switch.When(UiFramework.RazorPages.ToString("D"))
