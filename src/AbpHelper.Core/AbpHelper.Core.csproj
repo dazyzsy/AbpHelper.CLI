@@ -45,8 +45,13 @@
 
   <ItemGroup>
     <None Remove="Templates\Baan\Crud\ApplicationAutoMapperProfile_CreateMap" />
+    <None Remove="Templates\Baan\Crud\DbContextClass_DtoProperty" />
+    <None Remove="Templates\Baan\Crud\DbContextClass_Property" />
+    <None Remove="Templates\Baan\Crud\DbContextModelCreatingExtensions_EntityConfig" />
+    <None Remove="Templates\Baan\Crud\DbContextModelCreatingExtensions_Using" />
     <None Remove="Templates\Baan\Crud\Entity_ProtectedConstructor" />
     <None Remove="Templates\Baan\Crud\Entity_PublicConstructor" />
+    <None Remove="Templates\Baan\Crud\UsingContractEntityDtoNamespace" />
     <None Remove="Templates\Baan\Crud\UsingEntityDtoNamespace" />
     <None Remove="Templates\Baan\Crud\UsingEntityNamespace" />
     <None Remove="Templates\Baan\Crud\WebAutoMapperProfile_CreateMap" />
@@ -54,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Templates\Baan\Crud\Groups\" />
+    <Folder Include="Templates\Baan\Crud\Groups\UiAntdPro\" />
   </ItemGroup>
 
 </Project>

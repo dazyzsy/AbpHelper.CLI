@@ -4,6 +4,7 @@ using EasyAbp.AbpHelper.Core.Steps.Abp;
 using EasyAbp.AbpHelper.Core.Steps.Baan;
 using EasyAbp.AbpHelper.Core.Steps.Common;
 using EasyAbp.AbpHelper.Core.Workflow;
+using EasyAbp.AbpHelper.Core.Workflow.Baan.Generate.Crud;
 using EasyAbp.AbpHelper.Core.Workflow.Generate;
 using EasyAbp.AbpHelper.Core.Workflow.Generate.Crud;
 using Elsa;
@@ -61,7 +62,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                             ;
                     })
                 .AddEntityUsingGenerationWorkflow("EntityUsing")
-                //.AddEfCoreConfigurationWorkflow()
+                .AddBaanEfCoreConfigurationWorkflow()
                 //.Then<IfElse>(
                 //    step => step.ConditionExpression = new JavaScriptExpression<bool>($"{OptionVariableName}.{nameof(BaanCrudCommandOption.SkipCustomRepository)}"),
                 //    ifElse =>
@@ -109,7 +110,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                                         .Then(TestGeneration);
 
                                     @switch.When(UiFramework.Antd.ToString("D"))
-                                        .AddUiRazorPagesGenerationWorkflow()
+                                        .AddUiBaanAntdGenerationWorkflow()
                                         .Then(TestGeneration);
 
                                     @switch.When(UiFramework.RazorPages.ToString("D"))
@@ -135,7 +136,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                     {
                         ifElse
                             .When(OutcomeNames.False)
-                            .AddTestGenerationWorkflow()
+                            //.AddTestGenerationWorkflow()
                             //.Then(DbMigrations)
                             ;
                         //ifElse

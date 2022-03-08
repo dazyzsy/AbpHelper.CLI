@@ -23,6 +23,13 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Generate.Crud
                             step.GeneratedTextKey = new LiteralExpression("EntityDtoUsingText");
                         }
                     )
+                    .Then<TextGenerationStep>(
+                        step =>
+                        {
+                            step.TemplateName = "UsingContractEntityDtoNamespace";
+                            step.GeneratedTextKey = new LiteralExpression("ContractEntityDtoUsingText");
+                        }
+                    )
                 ;
         }
     }

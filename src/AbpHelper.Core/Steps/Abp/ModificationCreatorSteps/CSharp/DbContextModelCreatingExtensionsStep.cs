@@ -34,9 +34,9 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp
                     InsertPosition.After,
                     root => root.DescendantsNotContain<UsingDirectiveSyntax>(modelingUsingText)),
                 new InsertionBuilder<CSharpSyntaxNode>(
-                    root => root.Descendants<MethodDeclarationSyntax>().First().GetEndLine(),
+                    root => root.Descendants<MethodDeclarationSyntax>().Last().GetEndLine(),
                     entityConfigText,
-                    modifyCondition: root => root.Descendants<MethodDeclarationSyntax>().First().NotContains(entityConfigText)
+                    modifyCondition: root => root.Descendants<MethodDeclarationSyntax>().Last().NotContains(entityConfigText)
                 )
             };
         }

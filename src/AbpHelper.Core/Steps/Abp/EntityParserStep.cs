@@ -50,9 +50,9 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                 var className = classDeclarationSyntax.Identifier.ToString();
                 var baseList = classDeclarationSyntax.BaseList!;
 
-                var t  = baseList.Descendants<SimpleBaseTypeSyntax>().ToList();
+                var t = baseList.Descendants<SimpleBaseTypeSyntax>().ToList();
 
-                var b = t[0].ToFullString(); 
+                var b = t[0].ToFullString();
                 var a = baseList.Descendants<SimpleBaseTypeSyntax>().First(node => !node.ToFullString().StartsWith("I"))
                     .Descendants<GenericNameSyntax>();
                 var genericNameSyntax = baseList.Descendants<SimpleBaseTypeSyntax>()
@@ -87,9 +87,17 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                 }
 
                 var properties = root.Descendants<PropertyDeclarationSyntax>()
-                        .Select(prop => new PropertyInfo(prop.Type.ToString(), prop.Identifier.ToString()))
+                        .Select(prop => new PropertyInfo(
+                            prop.Type.ToString(),
+                            prop.Identifier.ToString(),
+                            prop.AttributeLists
+                                .FirstOrDefault()?
+                                .Attributes.FirstOrDefault()?
+                                .ArgumentList?.Arguments.FirstOrDefault()?
+                                .Expression.GetLastToken().ValueText ?? ""))
                         .ToList()
                     ;
+
                 var entityInfo = new EntityInfo(@namespace, className, baseType, primaryKey, relativeDirectory);
                 entityInfo.Properties.AddRange(properties);
                 if (keyNames != null)

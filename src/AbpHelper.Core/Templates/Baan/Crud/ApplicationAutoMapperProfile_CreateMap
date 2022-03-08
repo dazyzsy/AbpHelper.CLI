@@ -1,5 +1,6 @@
+            CreateMap<Get{{ EntityInfo.NamePluralized }}Input, BoneQueryInput>();
             CreateMap<{{ EntityInfo.Name }}, {{ DtoInfo.ReadTypeName }}>();
-            CreateMap<{{ DtoInfo.CreateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source);
+            CreateMap<{{ DtoInfo.CreateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source).ReverseMap();
 {{~ if DtoInfo.CreateTypeName != DtoInfo.UpdateTypeName ~}}            
-            CreateMap<{{ DtoInfo.UpdateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source);
+            CreateMap<{{ DtoInfo.UpdateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source).ReverseMap();
 {{~ end ~}}

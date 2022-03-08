@@ -20,6 +20,31 @@ namespace EasyAbp.AbpHelper.Core.Generator
             return string.Join('.', parts);
         }
 
+        public static string TsType(string text)
+        {
+            switch (text)
+            {
+                case "DateTime":
+                    return "Date";
+                case "bool":
+                    return "boolean";
+                case "int":
+                    return "number";
+                case "double":
+                    return "number";
+                case "decimal":
+                    return "number";
+                default:
+                    return text;
+            }
+        }
+
+        public static bool IsTime(PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.Type == "DateTime" || propertyInfo.Type == "DateTime?") return true;
+            return false;
+        }
+
         public static bool IsIgnoreProperty(PropertyInfo propertyInfo)
         {
             if (propertyInfo.Type == "Guid?" && propertyInfo.Name == "TenantId") return true;

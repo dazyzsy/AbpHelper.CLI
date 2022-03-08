@@ -20,6 +20,13 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Generate.Crud
                             step.TargetDirectory = new JavaScriptExpression<string>(VariableNames.AspNetCoreDir);
                         }
                     ).WithName(name)
+                    .Then<GroupGenerationStep>(
+                        step =>
+                        {
+                            step.GroupName = "Contract";
+                            step.TargetDirectory = new JavaScriptExpression<string>(VariableNames.AspNetCoreDir);
+                        }
+                    )
                     /* Baan No Need Generate permissions 
                        Maybe Generate In Total Project */
                     //.IfElse(
@@ -44,7 +51,7 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Generate.Crud
                     //            ;
                     //    }
                     //)
-                    /* Add mapping */                                                
+                    /* Add mapping */
                     .Then<FileFinderStep>(step => step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}ApplicationAutoMapperProfile.cs`")).WithName(ActivityNames.AutoMapper)
                     .Then<ApplicationAutoMapperProfileStep>()
                     .Then<FileModifierStep>()

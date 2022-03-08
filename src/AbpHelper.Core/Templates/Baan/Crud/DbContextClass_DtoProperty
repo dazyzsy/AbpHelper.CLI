@@ -1,0 +1,3 @@
+        public DbSet<{{ EntityInfo.Name }}ListDto> {{ EntityInfo.Name }}ListDtos { get; set; }
+
+

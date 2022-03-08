@@ -1,0 +1,1 @@
+using BoneTotal.Contract.{{ EntityInfo.Name }}.ListDto;

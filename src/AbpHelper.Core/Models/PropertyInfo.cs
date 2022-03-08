@@ -6,10 +6,13 @@
 
         public string Name { get; }
 
-        public PropertyInfo(string type, string name)
+        public string ColumnName { get; }
+
+        public PropertyInfo(string type, string name,string columnName)
         {
             Type = type;
             Name = name;
+            ColumnName = columnName;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace EasyAbp.AbpHelper.Core.Commands
 
         protected virtual string OptionVariableName => CommandConsts.OptionVariableName;
         protected virtual string BaseDirectoryVariableName => CommandConsts.BaseDirectoryVariableName;
+        protected virtual string BaseUiDirectoryVariableName => CommandConsts.BaseUiDirectoryVariableName;
         protected virtual string ExcludeDirectoriesVariableName => CommandConsts.ExcludeDirectoriesVariableName;
 
         public ILogger<CommandWithOption<TOption>> Logger { get; set; }
@@ -40,6 +41,7 @@ namespace EasyAbp.AbpHelper.Core.Commands
         public virtual async Task RunCommand(TOption option)
         {
             option.Directory = GetBaseDirectory(option.Directory);
+            option.AntdDirectory = GetBaseDirectory(option.AntdDirectory);
 
             await ServiceProvider.GetRequiredService<ICheckUpdateService>().CheckUpdateAsync();
 
@@ -57,6 +59,12 @@ namespace EasyAbp.AbpHelper.Core.Commands
                         {
                             step.VariableName = BaseDirectoryVariableName;
                             step.ValueExpression = new LiteralExpression(option.Directory);
+                        })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = BaseUiDirectoryVariableName;
+                            step.ValueExpression = new LiteralExpression(option.AntdDirectory);
                         })
                     .Then<SetVariable>(
                         step =>

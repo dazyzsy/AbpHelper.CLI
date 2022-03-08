@@ -4,9 +4,10 @@ namespace EasyAbp.AbpHelper.Core.Models
 {
     public class ProjectInfo
     {
-        public ProjectInfo(string baseDirectory, string fullName, TemplateType templateType, UiFramework uiFramework, bool tiered)
+        public ProjectInfo(string baseDirectory, string baseUiDirectory, string fullName, TemplateType templateType, UiFramework uiFramework, bool tiered)
         {
             BaseDirectory = baseDirectory;
+            BaseUiDirectory = baseUiDirectory;
             TemplateType = templateType;
             UiFramework = uiFramework;
             Tiered = tiered;
@@ -14,6 +15,7 @@ namespace EasyAbp.AbpHelper.Core.Models
         }
 
         public string BaseDirectory { get; }
+        public string BaseUiDirectory { get; }
         public string FullName { get; }
         public string Name => FullName.Split('.').Last();
         public TemplateType TemplateType { get; }
@@ -22,7 +24,7 @@ namespace EasyAbp.AbpHelper.Core.Models
 
         public override string ToString()
         {
-            return $"{nameof(BaseDirectory)}: {BaseDirectory}, {nameof(FullName)}: {FullName}, {nameof(Name)}: {Name}, {nameof(TemplateType)}: {TemplateType}, {nameof(UiFramework)}: {UiFramework}, {nameof(Tiered)}: {Tiered}";
+            return $"{nameof(BaseDirectory)}: {BaseDirectory}, {nameof(BaseUiDirectory)}: { BaseUiDirectory},{nameof(FullName)}: {FullName}, {nameof(Name)}: {Name}, {nameof(TemplateType)}: {TemplateType}, {nameof(UiFramework)}: {UiFramework}, {nameof(Tiered)}: {Tiered}";
         }
     }
 

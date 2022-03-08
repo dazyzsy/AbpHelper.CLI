@@ -17,8 +17,10 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp
         {
             var model = context.GetVariable<object>("Model");
             string entityUsingText = context.GetVariable<string>("EntityUsingText");
+            string contractEntityDtoUsingText = context.GetVariable<string>("ContractEntityDtoUsingText");
             string templateDir = context.GetVariable<string>(VariableNames.TemplateDirectory);
             string dbContextPropertyText = TextGenerator.GenerateByTemplateName(templateDir, "DbContextClass_Property", model);
+            string dbContextDtoPropertyText = TextGenerator.GenerateByTemplateName(templateDir, "DbContextClass_DtoProperty", model);
 
             return new List<ModificationBuilder<CSharpSyntaxNode>>
             {
@@ -26,12 +28,23 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp
                     root => root.Descendants<UsingDirectiveSyntax>().Last().GetEndLine(),
                     entityUsingText,
                     InsertPosition.After,
-                    root => root.DescendantsNotContain<UsingDirectiveSyntax>(entityUsingText)
+                    modifyCondition:root => root.DescendantsNotContain<UsingDirectiveSyntax>(entityUsingText)
+                ),
+                new InsertionBuilder<CSharpSyntaxNode>(
+                    root => root.Descendants<UsingDirectiveSyntax>().Last().GetEndLine(),
+                    contractEntityDtoUsingText,
+                    InsertPosition.After,
+                    modifyCondition:root => root.DescendantsNotContain<UsingDirectiveSyntax>(contractEntityDtoUsingText)
                 ),
                 new InsertionBuilder<CSharpSyntaxNode>(
                     root => root.Descendants<ConstructorDeclarationSyntax>().Single().Identifier.GetStartLine() - 1,
                     dbContextPropertyText,
                     modifyCondition: root => root.DescendantsNotContain<PropertyDeclarationSyntax>(dbContextPropertyText)
+                ),
+                new InsertionBuilder<CSharpSyntaxNode>(
+                    root => root.Descendants<ConstructorDeclarationSyntax>().Single().Identifier.GetStartLine() - 1,
+                    dbContextDtoPropertyText,
+                    modifyCondition: root => root.DescendantsNotContain<PropertyDeclarationSyntax>(dbContextDtoPropertyText)
                 )
             };
         }

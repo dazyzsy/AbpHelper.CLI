@@ -15,6 +15,15 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
         {
             var baseDirectory = await context.EvaluateAsync(BaseDirectory, cancellationToken);
             LogInput(() => baseDirectory);
+
+            var baseUiDirectory = await context.EvaluateAsync(BaseUiDirectory, cancellationToken);
+            LogInput(() => baseUiDirectory);
+
+            if (Directory.Exists(baseUiDirectory))
+            {
+                context.SetVariable(VariableNames.UiDir, baseUiDirectory);
+            }
+           
             var excludeDirectories = await context.EvaluateAsync(ExcludeDirectories, cancellationToken);
             LogInput(() => excludeDirectories, string.Join("; ", excludeDirectories));
 
@@ -101,7 +110,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                 tiered = FileExistsInDirectory(baseDirectory, "*.IdentityServer.csproj", excludeDirectories);
             }
 
-            var projectInfo = new ProjectInfo(baseDirectory, fullName, templateType, uiFramework, tiered);
+            var projectInfo = new ProjectInfo(baseDirectory, baseUiDirectory, fullName, templateType, uiFramework, tiered);
 
             context.SetLastResult(projectInfo);
             context.SetVariable("ProjectInfo", projectInfo);
