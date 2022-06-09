@@ -62,7 +62,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                             ;
                     })
                 .AddEntityUsingGenerationWorkflow("EntityUsing")
-                .AddBaanEfCoreConfigurationWorkflow()
+                //.AddBaanEfCoreConfigurationWorkflow()
                 //.Then<IfElse>(
                 //    step => step.ConditionExpression = new JavaScriptExpression<bool>($"{OptionVariableName}.{nameof(BaanCrudCommandOption.SkipCustomRepository)}"),
                 //    ifElse =>
@@ -79,19 +79,19 @@ namespace EasyAbp.AbpHelper.Core.Commands.BaanGenerate.Crud
                 //            ;
                 //    }
                 //)
-                .AddServiceGenerationWorkflow("ServiceGeneration")
-                .Then<IfElse>(
-                    step => step.ConditionExpression = new JavaScriptExpression<bool>($"{OptionVariableName}.{nameof(BaanCrudCommandOption.SkipLocalization)}"),
-                    ifElse =>
-                    {
-                        ifElse.When(OutcomeNames.False)
-                            .Then(ActivityNames.Ui)
-                            ;
-                        ifElse.When(OutcomeNames.True)
-                            .AddLocalizationGenerationWorkflow()
-                            .Then(ActivityNames.Ui)
-                            ;
-                    })
+                //.AddServiceGenerationWorkflow("ServiceGeneration")
+                //.Then<IfElse>(
+                //    step => step.ConditionExpression = new JavaScriptExpression<bool>($"{OptionVariableName}.{nameof(BaanCrudCommandOption.SkipLocalization)}"),
+                //    ifElse =>
+                //    {
+                //        ifElse.When(OutcomeNames.False)
+                //            .Then(ActivityNames.Ui)
+                //            ;
+                //        ifElse.When(OutcomeNames.True)
+                //            .AddLocalizationGenerationWorkflow()
+                //            .Then(ActivityNames.Ui)
+                //            ;
+                //    })
                 .Then<IfElse>(
                     step => step.ConditionExpression = new JavaScriptExpression<bool>($"{OptionVariableName}.{nameof(BaanCrudCommandOption.SkipUi)}"),
                     ifElse =>

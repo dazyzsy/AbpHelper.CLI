@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <None Remove="Templates\Baan\Crud\ApplicationAutoMapperProfile_CreateMap" />
+    <None Remove="Templates\Baan\Crud\Config_Routes" />
     <None Remove="Templates\Baan\Crud\DbContextClass_DtoProperty" />
     <None Remove="Templates\Baan\Crud\DbContextClass_Property" />
     <None Remove="Templates\Baan\Crud\DbContextModelCreatingExtensions_EntityConfig" />

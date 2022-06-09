@@ -1,19 +1,22 @@
-﻿using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Elsa.Expressions;
+﻿using Elsa.Expressions;
 using Elsa.Results;
 using Elsa.Scripting.JavaScript;
 using Elsa.Services.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EasyAbp.AbpHelper.Core.Steps.Common
 {
-    public class FileFinderStep : StepWithOption
+    public class UiFileFinderStep : StepWithOption
     {
-        public const string DefaultFileParameterName = "FileFinderResult";
+        public const string DefaultUiFileParameterName = "FileFinderResult";
 
-        public WorkflowExpression<string> SearchFileName
+        public WorkflowExpression<string> SearchUiFileName
         {
             get => GetState<WorkflowExpression<string>>();
             set => SetState(value);
@@ -21,7 +24,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
 
         public WorkflowExpression<string> ResultVariableName
         {
-            get => GetState(() => new LiteralExpression(DefaultFileParameterName));
+            get => GetState(() => new LiteralExpression(DefaultUiFileParameterName));
             set => SetState(value);
         }
 
@@ -34,22 +37,20 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
         {
             var resultVariableName = await context.EvaluateAsync(ResultVariableName, cancellationToken);
-            var baseDirectory = await context.EvaluateAsync(BaseDirectory, cancellationToken);
-            LogInput(() => baseDirectory);
+            var baseUiDirectory = await context.EvaluateAsync(BaseUiDirectory, cancellationToken);
+            LogInput(() => baseUiDirectory);
             var excludeDirectories = await context.EvaluateAsync(ExcludeDirectories, cancellationToken);
-            // TODO: 应该建立一个Ui用的exclude选项
-            var temp = excludeDirectories.ToList();
-            if (temp != null && temp.Any(ed => ed.Contains("node_modules")))
+            if (excludeDirectories.Length==0)
             {
-                excludeDirectories = temp.Where(ed => !ed.Contains("node_modules")).ToArray();
+                //excludeDirectories = new string[] { Path.Combine(baseUiDirectory, "node_modules")};//.AddIfNotContains("node_modules");
+                excludeDirectories = new string[] { "node_modules" };//.AddIfNotContains("node_modules");
             }
             LogInput(() => excludeDirectories, string.Join("; ", excludeDirectories));
-            var searchFileName = await context.EvaluateAsync(SearchFileName, cancellationToken);
-            LogInput(() => searchFileName);
+            var searchUiFileName = await context.EvaluateAsync(SearchUiFileName, cancellationToken);
+            LogInput(() => searchUiFileName);
             var errorIfNotFound = await context.EvaluateAsync(ErrorIfNotFound, cancellationToken);
-            LogInput(() => errorIfNotFound);
 
-            var files = SearchFilesInDirectory(baseDirectory, searchFileName, excludeDirectories);
+            var files = SearchFilesInDirectory(baseUiDirectory, searchUiFileName, excludeDirectories);
 
             var filePathName = files.SingleOrDefault();
 
@@ -57,7 +58,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
             context.SetVariable(resultVariableName, filePathName);
             if (filePathName == null)
             {
-                if (errorIfNotFound) throw new FileNotFoundException(searchFileName);
+                if (errorIfNotFound) throw new FileNotFoundException(searchUiFileName);
                 LogOutput(() => filePathName, $"File: '{filePathName}' not found, stored 'null' in parameter: '{ResultVariableName}'");
             }
             else

@@ -1,0 +1,10 @@
+{{- name = EntityInfo.NamespaceLastPart ~}}
+{{- name_list = EntityInfo.Name ~}}
+
+{
+              path: '/{{ EntityInfo.NamePluralized | abp.camel_case }}',
+              name: '{{ EntityInfo.NamePluralized | abp.camel_case }}',
+              icon: 'idcard',
+              // authority: ['{{ EntityInfo.Name }}.Pages'],
+              component: './{{ EntityInfo.Name }}',
+},

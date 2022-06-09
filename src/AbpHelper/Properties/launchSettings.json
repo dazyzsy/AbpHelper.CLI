@@ -2,7 +2,7 @@
   "profiles": {
     "AbpHelper": {
       "commandName": "Project",
-      "commandLineArgs": "bgen crud -d D:\\Codes\\BaanApiNext -p D:\\Codes\\Bone.Total.UI  Todo "
+      "commandLineArgs": "bgen crud --exclude node_modules  -d D:\\Codes\\BaanApiNext -p D:\\Codes\\Bone.Total.UI Todo "
     }
   }
 }

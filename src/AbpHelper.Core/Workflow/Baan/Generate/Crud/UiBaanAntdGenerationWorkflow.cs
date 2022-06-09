@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using EasyAbp.AbpHelper.Core.Steps.Abp;
 using EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp;
+using EasyAbp.AbpHelper.Core.Steps.Baan.AntdPro;
 using EasyAbp.AbpHelper.Core.Steps.Common;
 using Elsa;
 using Elsa.Activities;
 using Elsa.Activities.ControlFlow.Activities;
+using Elsa.Expressions;
 using Elsa.Scripting.JavaScript;
 using Elsa.Services;
 
@@ -115,6 +117,16 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Baan.Generate.Crud
                     //    })
                     //.Then<WebAutoMapperProfileStep>()
                     .Then<FileModifierStep>()
+                    /* Modify config.ts */
+                    .Then<UiFileFinderStep>(
+                        step => {
+                            step.SearchUiFileName = new LiteralExpression("config.ts");
+                        }
+                    )
+                    .Then<AddRoutesInConfigStep>()
+                    .Then<FileModifierStep>(
+                        step => step.NewLine = new JavaScriptExpression<string>(@"'\n'")
+                    )
                 ;
         }
     }

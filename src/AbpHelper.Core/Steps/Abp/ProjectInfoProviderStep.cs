@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EasyAbp.AbpHelper.Core.Models;
@@ -26,6 +27,12 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
            
             var excludeDirectories = await context.EvaluateAsync(ExcludeDirectories, cancellationToken);
             LogInput(() => excludeDirectories, string.Join("; ", excludeDirectories));
+
+            var temp = excludeDirectories.ToList();
+            if (temp!=null && temp.Any(ed=>ed.Contains("node_modules")))
+            {
+                excludeDirectories = temp.Where(ed => !ed.Contains("node_modules")).ToArray();
+            }
 
             TemplateType templateType;
             if (FileExistsInDirectory(baseDirectory, "*.DbMigrator.csproj", excludeDirectories))
